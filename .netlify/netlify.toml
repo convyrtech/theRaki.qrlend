@@ -1,0 +1,31 @@
+plugins = []
+redirects = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "D:\\raki\\deploy"
+publishOrigin = "default"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[headers]]
+for = "/download/theraki.apk"
+
+[headers.values]
+Content-Disposition = "attachment; filename=\"theraki.apk\""
+Content-Type = "application/vnd.android.package-archive"
