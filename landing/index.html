@@ -4,95 +4,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Raki — Скачай приложение</title>
-    <meta name="description" content="Скачай приложение The Raki — заказывай любимых раков с кешбэком до 10%">
+    <meta name="description" content="Скачай приложение The Raki — заказывай премиум раков и морепродукты с кешбэком до 10%">
     <meta name="theme-color" content="#0b3237">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦐</text></svg>">
     <meta property="og:title" content="The Raki — Скачай приложение">
     <meta property="og:description" content="Премиум раки и морепродукты с доставкой по Москве. Кешбэк до 10%.">
     <meta property="og:type" content="website">
-    <!-- iOS: instant redirect (user won't see this page) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦐</text></svg>">
+
+    <!-- INSTANT REDIRECTS — user never sees the page -->
     <script>
     (function() {
         var ua = navigator.userAgent || '';
+        // iOS → App Store immediately
         if (/iPhone|iPad|iPod/i.test(ua)) {
             window.location.replace('https://apps.apple.com/app/id1615829936');
+            return;
+        }
+        // Android → RuStore immediately
+        if (/Android/i.test(ua)) {
+            // Huawei with HMS → AppGallery
+            if (/Huawei|HMSCore/i.test(ua) && !/GMS/i.test(ua)) {
+                window.location.replace('https://appgallery.huawei.com/app/C105908103');
+            } else {
+                window.location.replace('https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer');
+            }
         }
     })();
     </script>
+
     <style>
         :root {
             --bg: #0b3237;
-            --bg-card: #0e3d43;
+            --bg-light: #0e3d43;
+            --bg-card: rgba(255,255,255,0.06);
             --teal: #51a8af;
-            --teal-dark: #2e9099;
+            --teal-glow: rgba(81,168,175,0.3);
             --gold: #be9667;
+            --gold-glow: rgba(190,150,103,0.2);
             --white: #ffffff;
-            --white-dim: rgba(255,255,255,0.7);
-            --red: #e10600;
+            --white-70: rgba(255,255,255,0.7);
+            --white-40: rgba(255,255,255,0.4);
+            --white-15: rgba(255,255,255,0.15);
+            --white-08: rgba(255,255,255,0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
             color: var(--white);
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 24px 16px;
+            padding: 32px 20px;
             -webkit-font-smoothing: antialiased;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Subtle animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(81,168,175,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(190,150,103,0.06) 0%, transparent 50%);
+            animation: bgShift 20s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes bgShift {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-5%, -3%) rotate(3deg); }
         }
 
         .container {
-            max-width: 400px;
+            max-width: 380px;
             width: 100%;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
+        /* Logo */
         .logo {
-            width: 220px;
+            width: 180px;
             height: auto;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             filter: brightness(0) invert(1);
+            opacity: 0;
+            animation: fadeScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
         }
 
         .tagline {
-            font-size: 14px;
-            color: var(--white-dim);
-            margin-bottom: 32px;
+            font-size: 13px;
+            color: var(--white-40);
+            margin-bottom: 36px;
             font-style: italic;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.3s forwards;
         }
 
         .heading {
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 8px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.4s forwards;
         }
 
         .subheading {
             font-size: 15px;
-            color: var(--white-dim);
-            margin-bottom: 32px;
-            line-height: 1.4;
+            color: var(--white-70);
+            margin-bottom: 24px;
+            line-height: 1.5;
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.5s forwards;
         }
 
+        /* Cashback badge */
         .cashback {
-            display: inline-block;
-            background: var(--gold);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, var(--gold), #d4a96a);
             color: var(--bg);
             font-weight: 700;
             font-size: 13px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 28px;
+            padding: 6px 16px;
+            border-radius: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 20px var(--gold-glow);
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.6s forwards;
         }
 
-        /* Primary button — RuStore */
+        /* Buttons container — hidden initially on mobile, shown as fallback */
+        .buttons {
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.7s forwards;
+        }
+
+        /* Primary button */
         .btn-primary {
             display: flex;
             align-items: center;
@@ -100,16 +164,30 @@
             gap: 10px;
             width: 100%;
             padding: 16px 24px;
-            background: var(--teal);
+            background: linear-gradient(135deg, var(--teal), #3d949b);
             color: var(--white);
             text-decoration: none;
-            border-radius: 14px;
+            border-radius: 16px;
             font-size: 17px;
             font-weight: 600;
-            transition: background 0.2s, transform 0.1s;
+            letter-spacing: -0.2px;
+            transition: all 0.2s ease;
             margin-bottom: 12px;
+            box-shadow: 0 4px 24px var(--teal-glow);
+            position: relative;
+            overflow: hidden;
         }
-        .btn-primary:active { transform: scale(0.98); background: var(--teal-dark); }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+            pointer-events: none;
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
+            box-shadow: 0 2px 12px var(--teal-glow);
+        }
 
         /* Secondary buttons */
         .btn-secondary {
@@ -120,16 +198,21 @@
             width: 100%;
             padding: 14px 20px;
             background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: var(--white);
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 15px;
             font-weight: 500;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: background 0.2s, transform 0.1s;
+            border: 1px solid var(--white-08);
+            transition: all 0.2s ease;
             margin-bottom: 10px;
         }
-        .btn-secondary:active { transform: scale(0.98); background: rgba(255,255,255,0.08); }
+        .btn-secondary:active {
+            transform: scale(0.97);
+            background: var(--white-08);
+        }
 
         .btn-row {
             display: flex;
@@ -138,89 +221,122 @@
         }
         .btn-row .btn-secondary { margin-bottom: 0; }
 
-        /* APK link — tertiary */
-        .btn-apk {
-            display: inline-block;
-            color: var(--white-dim);
-            text-decoration: underline;
-            text-decoration-color: rgba(255,255,255,0.3);
-            font-size: 13px;
-            padding: 8px;
-            margin-top: 4px;
-            transition: color 0.2s;
-        }
-        .btn-apk:hover { color: var(--white); }
+        /* Icons */
+        .icon { width: 20px; height: 20px; flex-shrink: 0; }
 
-        /* Store icons (inline SVG) */
-        .icon { width: 22px; height: 22px; flex-shrink: 0; }
-
+        /* Divider */
         .divider {
-            width: 40px;
+            width: 32px;
             height: 1px;
-            background: rgba(255,255,255,0.15);
-            margin: 20px auto;
+            background: var(--white-15);
+            margin: 24px auto;
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.8s forwards;
         }
 
-        .footer {
-            font-size: 12px;
-            color: rgba(255,255,255,0.35);
-            margin-top: 24px;
-            line-height: 1.5;
+        /* Redirect notice — shown on mobile while redirecting */
+        .redirect-notice {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.7s forwards;
         }
-        .footer a { color: var(--teal); text-decoration: none; }
+        .redirect-notice p {
+            font-size: 15px;
+            color: var(--white-70);
+            margin-bottom: 16px;
+        }
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 2px solid var(--white-15);
+            border-top-color: var(--teal);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .redirect-notice .fallback-link {
+            color: var(--white-40);
+            font-size: 13px;
+            text-decoration: underline;
+            text-decoration-color: var(--white-15);
+        }
 
-        /* Desktop view */
+        /* Desktop hint */
         .desktop-hint {
             display: none;
             font-size: 14px;
-            color: var(--white-dim);
-            margin-top: 20px;
-            padding: 16px;
-            border: 1px dashed rgba(255,255,255,0.2);
-            border-radius: 12px;
+            color: var(--white-70);
+            padding: 20px;
+            border: 1px solid var(--white-08);
+            border-radius: 16px;
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            line-height: 1.5;
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 0.9s forwards;
         }
+
+        /* Footer */
+        .footer {
+            font-size: 12px;
+            color: var(--white-40);
+            margin-top: 28px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeUp 0.6s ease-out 1s forwards;
+        }
+        .footer a {
+            color: var(--teal);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .footer a:hover { opacity: 0.8; }
 
         /* Animations */
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(16px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .container > * {
-            animation: fadeUp 0.5s ease-out both;
+        @keyframes fadeScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
-        .container > *:nth-child(2) { animation-delay: 0.05s; }
-        .container > *:nth-child(3) { animation-delay: 0.1s; }
-        .container > *:nth-child(4) { animation-delay: 0.15s; }
-        .container > *:nth-child(5) { animation-delay: 0.2s; }
-        .container > *:nth-child(6) { animation-delay: 0.25s; }
-        .container > *:nth-child(7) { animation-delay: 0.3s; }
-        .container > *:nth-child(8) { animation-delay: 0.35s; }
-        .container > *:nth-child(9) { animation-delay: 0.4s; }
+
+        /* Reduce motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before { animation-duration: 0.01ms !important; }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Logo -->
     <img class="logo" src="https://static.tildacdn.com/tild6166-6463-4438-a531-663435656263/logo.png" alt="The Raki" onerror="this.style.display='none'">
-    <p class="tagline">Вкусности для гурманов...</p>
+    <p class="tagline">вкусности для гурманов</p>
 
-    <!-- Copy -->
     <h1 class="heading">Скачай приложение</h1>
-    <p class="subheading">Заказывай любимых раков и морепродукты<br>с доставкой по Москве и МО</p>
+    <p class="subheading">Премиум раки и морепродукты<br>с доставкой по Москве и МО</p>
 
-    <!-- Cashback badge -->
     <div class="cashback">Кешбэк до 10%</div>
 
-    <!-- Buttons: shown for Android, hidden for iOS (iOS auto-redirects) -->
-    <div id="buttons">
-        <!-- RuStore — primary for Android -->
-        <a class="btn-primary" id="btn-rustore" href="https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer">
+    <!-- Redirect notice — shown on mobile while auto-redirecting -->
+    <div class="redirect-notice" id="redirect-notice">
+        <div class="spinner"></div>
+        <p>Перенаправляем в магазин приложений...</p>
+        <a class="fallback-link" id="fallback-link" href="#">Открыть вручную</a>
+    </div>
+
+    <!-- Buttons — shown as fallback or on desktop -->
+    <div class="buttons" id="buttons" style="display:none;">
+        <a class="btn-primary" href="https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer">
             <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-7v4h4l-5 7z"/></svg>
             Открыть в RuStore
         </a>
 
-        <!-- App Store + Google Play row -->
         <div class="btn-row">
             <a class="btn-secondary" href="https://apps.apple.com/app/id1615829936">
                 <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -232,28 +348,21 @@
             </a>
         </div>
 
-        <!-- Huawei AppGallery -->
         <a class="btn-secondary" href="https://appgallery.huawei.com/app/C105908103">
             <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
             Huawei AppGallery
-        </a>
-
-        <!-- APK fallback -->
-        <a class="btn-apk" id="btn-apk" href="#" style="display:none;">
-            Скачать APK напрямую
         </a>
     </div>
 
     <div class="divider"></div>
 
-    <!-- Desktop hint -->
     <div class="desktop-hint" id="desktop-hint">
-        Откройте эту страницу с телефона<br>или отсканируйте QR-код на машине доставки
+        Откройте эту страницу с телефона<br>или отсканируйте QR-код на нашей машине доставки
     </div>
 
     <div class="footer">
         <a href="https://theraki.ru">theraki.ru</a> &middot; +7 (980) 888 05 88<br>
-        Доставка раков и морепродуктов по Москве и МО
+        Доставка премиум раков и морепродуктов
     </div>
 </div>
 
@@ -262,34 +371,33 @@
     var ua = navigator.userAgent || '';
     var isIOS = /iPhone|iPad|iPod/i.test(ua);
     var isAndroid = /Android/i.test(ua);
-    var isHuawei = /Huawei|HMSCore/i.test(ua);
     var isMobile = isIOS || isAndroid;
 
-    // iOS already redirected in <head>. This is a safety net.
-    if (isIOS) {
-        window.location.replace('https://apps.apple.com/app/id1615829936');
-        return;
-    }
+    var notice = document.getElementById('redirect-notice');
+    var buttons = document.getElementById('buttons');
+    var fallback = document.getElementById('fallback-link');
+    var hint = document.getElementById('desktop-hint');
 
-    // Android: show APK fallback link, highlight RuStore
-    if (isAndroid) {
-        var apkBtn = document.getElementById('btn-apk');
-        if (apkBtn) apkBtn.style.display = 'inline-block';
+    if (isMobile) {
+        // Show redirect spinner
+        notice.style.display = 'block';
 
-        // If Huawei device, swap primary button to AppGallery
-        if (isHuawei) {
-            var rustore = document.getElementById('btn-rustore');
-            if (rustore) {
-                rustore.href = 'https://appgallery.huawei.com/app/C105908103';
-                rustore.innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg> Открыть в AppGallery';
-            }
+        // Set fallback link
+        if (isIOS) {
+            fallback.href = 'https://apps.apple.com/app/id1615829936';
+        } else {
+            fallback.href = 'https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer';
         }
-    }
 
-    // Desktop: show hint
-    if (!isMobile) {
-        var hint = document.getElementById('desktop-hint');
-        if (hint) hint.style.display = 'block';
+        // If redirect didn't work after 2.5s, show buttons
+        setTimeout(function() {
+            notice.style.display = 'none';
+            buttons.style.display = 'block';
+        }, 2500);
+    } else {
+        // Desktop: show all buttons + hint
+        buttons.style.display = 'block';
+        hint.style.display = 'block';
     }
 })();
 </script>
