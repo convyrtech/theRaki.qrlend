@@ -2,10 +2,297 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Raki — Скачай приложение</title>
+    <meta name="description" content="Скачай приложение The Raki — заказывай любимых раков с кешбэком до 10%">
+    <meta name="theme-color" content="#0b3237">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦐</text></svg>">
+    <meta property="og:title" content="The Raki — Скачай приложение">
+    <meta property="og:description" content="Премиум раки и морепродукты с доставкой по Москве. Кешбэк до 10%.">
+    <meta property="og:type" content="website">
+    <!-- iOS: instant redirect (user won't see this page) -->
+    <script>
+    (function() {
+        var ua = navigator.userAgent || '';
+        if (/iPhone|iPad|iPod/i.test(ua)) {
+            window.location.replace('https://apps.apple.com/app/id1615829936');
+        }
+    })();
+    </script>
+    <style>
+        :root {
+            --bg: #0b3237;
+            --bg-card: #0e3d43;
+            --teal: #51a8af;
+            --teal-dark: #2e9099;
+            --gold: #be9667;
+            --white: #ffffff;
+            --white-dim: rgba(255,255,255,0.7);
+            --red: #e10600;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            width: 220px;
+            height: auto;
+            margin-bottom: 8px;
+            filter: brightness(0) invert(1);
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: var(--white-dim);
+            margin-bottom: 32px;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        .heading {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .subheading {
+            font-size: 15px;
+            color: var(--white-dim);
+            margin-bottom: 32px;
+            line-height: 1.4;
+        }
+
+        .cashback {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--bg);
+            font-weight: 700;
+            font-size: 13px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 28px;
+        }
+
+        /* Primary button — RuStore */
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--teal);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.1s;
+            margin-bottom: 12px;
+        }
+        .btn-primary:active { transform: scale(0.98); background: var(--teal-dark); }
+
+        /* Secondary buttons */
+        .btn-secondary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--bg-card);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: background 0.2s, transform 0.1s;
+            margin-bottom: 10px;
+        }
+        .btn-secondary:active { transform: scale(0.98); background: rgba(255,255,255,0.08); }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .btn-row .btn-secondary { margin-bottom: 0; }
+
+        /* APK link — tertiary */
+        .btn-apk {
+            display: inline-block;
+            color: var(--white-dim);
+            text-decoration: underline;
+            text-decoration-color: rgba(255,255,255,0.3);
+            font-size: 13px;
+            padding: 8px;
+            margin-top: 4px;
+            transition: color 0.2s;
+        }
+        .btn-apk:hover { color: var(--white); }
+
+        /* Store icons (inline SVG) */
+        .icon { width: 22px; height: 22px; flex-shrink: 0; }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: rgba(255,255,255,0.15);
+            margin: 20px auto;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: rgba(255,255,255,0.35);
+            margin-top: 24px;
+            line-height: 1.5;
+        }
+        .footer a { color: var(--teal); text-decoration: none; }
+
+        /* Desktop view */
+        .desktop-hint {
+            display: none;
+            font-size: 14px;
+            color: var(--white-dim);
+            margin-top: 20px;
+            padding: 16px;
+            border: 1px dashed rgba(255,255,255,0.2);
+            border-radius: 12px;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .container > * {
+            animation: fadeUp 0.5s ease-out both;
+        }
+        .container > *:nth-child(2) { animation-delay: 0.05s; }
+        .container > *:nth-child(3) { animation-delay: 0.1s; }
+        .container > *:nth-child(4) { animation-delay: 0.15s; }
+        .container > *:nth-child(5) { animation-delay: 0.2s; }
+        .container > *:nth-child(6) { animation-delay: 0.25s; }
+        .container > *:nth-child(7) { animation-delay: 0.3s; }
+        .container > *:nth-child(8) { animation-delay: 0.35s; }
+        .container > *:nth-child(9) { animation-delay: 0.4s; }
+    </style>
 </head>
 <body>
-    <!-- TODO: implement smart redirect landing page -->
+
+<div class="container">
+    <!-- Logo -->
+    <img class="logo" src="https://static.tildacdn.com/tild6166-6463-4438-a531-663435656263/logo.png" alt="The Raki" onerror="this.style.display='none'">
+    <p class="tagline">Вкусности для гурманов...</p>
+
+    <!-- Copy -->
+    <h1 class="heading">Скачай приложение</h1>
+    <p class="subheading">Заказывай любимых раков и морепродукты<br>с доставкой по Москве и МО</p>
+
+    <!-- Cashback badge -->
+    <div class="cashback">Кешбэк до 10%</div>
+
+    <!-- Buttons: shown for Android, hidden for iOS (iOS auto-redirects) -->
+    <div id="buttons">
+        <!-- RuStore — primary for Android -->
+        <a class="btn-primary" id="btn-rustore" href="https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-7v4h4l-5 7z"/></svg>
+            Открыть в RuStore
+        </a>
+
+        <!-- App Store + Google Play row -->
+        <div class="btn-row">
+            <a class="btn-secondary" href="https://apps.apple.com/app/id1615829936">
+                <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                App Store
+            </a>
+            <a class="btn-secondary" href="https://play.google.com/store/apps/details?id=com.yumasoft.ypos.theraki.customer">
+                <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 3.52a1.66 1.66 0 0 0-.18.76v15.44c0 .28.06.54.18.76L12 12 3.18 3.52zM13.41 12l3.76-3.76 1.65.95c1.36.79 1.36 2.08 0 2.86l-1.65.95L13.41 12zm-1.41 1.41L3.58 21.83l8.42-4.87L12 13.41zM12 10.59l.42-3.55L3.58 2.17 12 10.59z"/></svg>
+                Google Play
+            </a>
+        </div>
+
+        <!-- Huawei AppGallery -->
+        <a class="btn-secondary" href="https://appgallery.huawei.com/app/C105908103">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+            Huawei AppGallery
+        </a>
+
+        <!-- APK fallback -->
+        <a class="btn-apk" id="btn-apk" href="#" style="display:none;">
+            Скачать APK напрямую
+        </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Desktop hint -->
+    <div class="desktop-hint" id="desktop-hint">
+        Откройте эту страницу с телефона<br>или отсканируйте QR-код на машине доставки
+    </div>
+
+    <div class="footer">
+        <a href="https://theraki.ru">theraki.ru</a> &middot; +7 (980) 888 05 88<br>
+        Доставка раков и морепродуктов по Москве и МО
+    </div>
+</div>
+
+<script>
+(function() {
+    var ua = navigator.userAgent || '';
+    var isIOS = /iPhone|iPad|iPod/i.test(ua);
+    var isAndroid = /Android/i.test(ua);
+    var isHuawei = /Huawei|HMSCore/i.test(ua);
+    var isMobile = isIOS || isAndroid;
+
+    // iOS already redirected in <head>. This is a safety net.
+    if (isIOS) {
+        window.location.replace('https://apps.apple.com/app/id1615829936');
+        return;
+    }
+
+    // Android: show APK fallback link, highlight RuStore
+    if (isAndroid) {
+        var apkBtn = document.getElementById('btn-apk');
+        if (apkBtn) apkBtn.style.display = 'inline-block';
+
+        // If Huawei device, swap primary button to AppGallery
+        if (isHuawei) {
+            var rustore = document.getElementById('btn-rustore');
+            if (rustore) {
+                rustore.href = 'https://appgallery.huawei.com/app/C105908103';
+                rustore.innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg> Открыть в AppGallery';
+            }
+        }
+    }
+
+    // Desktop: show hint
+    if (!isMobile) {
+        var hint = document.getElementById('desktop-hint');
+        if (hint) hint.style.display = 'block';
+    }
+})();
+</script>
+
 </body>
 </html>
