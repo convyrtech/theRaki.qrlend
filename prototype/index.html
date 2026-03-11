@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Raki — Прототип сайта</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=PT+Sans:wght@400;700&display=swap&font-display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --teal:       #51a8af;
+            --teal-dark:  #3d8a91;
+            --teal-light: #e8f4f6;
+            --navy:       #0b3237;
+            --red:        #e10600;
+            --orange:     #E07830;
+            --orange-deep:#c86520;
+            --white:      #ffffff;
+            --text:       #1a2e3b;
+            --text-60:    rgba(26,46,59,0.6);
+            --text-20:    rgba(26,46,59,0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'PT Sans', -apple-system, sans-serif;
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 0 48px; height: 72px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(81,168,175,0.96);
+            backdrop-filter: blur(12px);
+            transition: background 0.4s ease;
+        }
+        .header.scrolled { background: rgba(11,50,55,0.97); }
+
+        .nav-left, .nav-right {
+            display: flex; gap: 32px; align-items: center;
+        }
+        .nav-link {
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 2.5px; text-transform: uppercase;
+            color: rgba(255,255,255,0.8); text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav-link:hover { color: #fff; }
+
+        .nav-logo {
+            position: absolute; left: 50%; transform: translateX(-50%);
+        }
+        .nav-logo img { height: 34px; filter: brightness(0) invert(1); }
+
+        .btn-nav-order {
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            background: var(--orange); color: #fff;
+            padding: 10px 22px; border-radius: 6px;
+            text-decoration: none; transition: background 0.2s;
+        }
+        .btn-nav-order:hover { background: var(--orange-deep); }
+
+        /* ── HERO ── */
+        .hero {
+            height: 100vh; min-height: 600px;
+            background: var(--teal);
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-gallery { position: absolute; inset: 0; }
+        .hero-slide {
+            position: absolute; inset: 0;
+            opacity: 0; transition: opacity 1.8s ease;
+            background-size: cover; background-position: center;
+        }
+        .hero-slide.active { opacity: 1; }
+
+        /* Stock photos — Unsplash seafood/crayfish */
+        .hero-slide:nth-child(1) {
+            background: linear-gradient(155deg, #1a5060 0%, #2d7a82 100%);
+            background-image: url('https://images.unsplash.com/photo-1559742811-822873691df8?w=1600&h=900&fit=crop&auto=format');
+            background-size: cover; background-position: center;
+        }
+        .hero-slide:nth-child(2) {
+            background: linear-gradient(155deg, #2d7a80 0%, #51a8af 100%);
+            background-image: url('https://images.unsplash.com/photo-1615361200141-f45040f367be?w=1600&h=900&fit=crop&auto=format');
+            background-size: cover; background-position: center;
+        }
+        .hero-slide:nth-child(3) {
+            background: linear-gradient(155deg, #1a4a52 0%, #3d8a91 100%);
+            background-image: url('https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=1600&h=900&fit=crop&auto=format');
+            background-size: cover; background-position: center;
+        }
+
+        .hero::after {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(11,50,55,0.38); pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative; z-index: 2;
+            text-align: center; color: #fff;
+            padding: 0 24px; max-width: 740px;
+        }
+        .hero-eyebrow {
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 4px; text-transform: uppercase;
+            color: rgba(255,255,255,0.65); margin-bottom: 22px;
+            opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
+        }
+        .hero-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(52px, 8.5vw, 100px);
+            font-weight: 300; line-height: 1.05;
+            letter-spacing: -1px; margin-bottom: 20px;
+            opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
+        }
+        .hero-title em { font-style: italic; }
+        .hero-sub {
+            font-size: 17px; color: rgba(255,255,255,0.78);
+            margin-bottom: 44px; line-height: 1.65;
+            opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;
+        }
+        .hero-cta {
+            opacity: 0; animation: fadeUp 0.8s ease 0.9s forwards;
+        }
+        .btn-hero {
+            display: inline-block;
+            font-size: 13px; font-weight: 700;
+            letter-spacing: 2.5px; text-transform: uppercase;
+            background: var(--orange); color: #fff;
+            padding: 18px 52px; border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(224,120,48,0.25);
+            transition: all 0.25s ease;
+        }
+        .btn-hero:hover {
+            background: var(--orange-deep);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(224,120,48,0.35);
+        }
+
+        .hero-scroll {
+            position: absolute; bottom: 72px; left: 50%;
+            transform: translateX(-50%); z-index: 2;
+            color: rgba(255,255,255,0.45);
+            font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            animation: fadeUp 1s ease 1.3s both;
+        }
+        .scroll-line {
+            width: 1px; height: 44px;
+            background: rgba(255,255,255,0.3);
+            animation: scrollPulse 2s ease infinite;
+        }
+        @keyframes scrollPulse {
+            0%,100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 0.8; transform: scaleY(1.4); }
+        }
+
+        /* ── ORNAMENT DIVIDER ── */
+        .ornament {
+            display: flex; align-items: center; justify-content: center;
+            gap: 20px; padding: 28px 64px;
+        }
+        .ornament-line { flex: 1; height: 1px; background: var(--red); opacity: 0.35; }
+        .ornament-symbol { color: var(--red); opacity: 0.65; font-size: 14px; letter-spacing: 10px; }
+
+        /* ── TRUST ── */
+        .trust {
+            background: var(--white);
+            padding: 100px 48px; text-align: center;
+        }
+        .section-label {
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 4px; text-transform: uppercase;
+            color: var(--teal); margin-bottom: 22px; display: block;
+        }
+        .section-label.red { color: var(--red); opacity: 0.65; }
+        .trust-headline {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(34px, 5vw, 58px);
+            font-weight: 300; line-height: 1.15;
+            max-width: 680px; margin: 0 auto 22px; color: var(--navy);
+        }
+        .trust-headline em { font-style: italic; color: var(--teal); }
+        .trust-desc {
+            font-size: 17px; color: var(--text-60);
+            max-width: 500px; margin: 0 auto 72px; line-height: 1.75;
+        }
+        .trust-stats {
+            display: flex; justify-content: center;
+            gap: 80px; flex-wrap: wrap;
+        }
+        .stat-num {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 60px; font-weight: 300;
+            color: var(--teal); line-height: 1; margin-bottom: 8px;
+        }
+        .stat-label { font-size: 13px; color: var(--text-60); line-height: 1.5; }
+
+        /* ── MENU ── */
+        .menu-section { background: var(--teal-light); padding: 100px 48px; }
+        .section-header { text-align: center; margin-bottom: 64px; }
+        .section-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(32px, 4vw, 50px);
+            font-weight: 300; color: var(--navy);
+        }
+
+        .menu-grid {
+            display: grid; grid-template-columns: repeat(3,1fr);
+            gap: 28px; max-width: 1120px; margin: 0 auto;
+        }
+        .menu-card {
+            background: var(--white); border-radius: 6px; overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .menu-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 64px rgba(81,168,175,0.18);
+        }
+        .menu-card-img {
+            height: 228px; position: relative; overflow: hidden;
+        }
+        .menu-card:nth-child(1) .menu-card-img {
+            background: linear-gradient(135deg,#3a9099,#51a8af);
+            background-image: url('https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&h=400&fit=crop&auto=format');
+            background-size: cover; background-position: center;
+        }
+        .menu-card:nth-child(2) .menu-card-img {
+            background: linear-gradient(135deg,#2d7a80,#4a9fa7);
+            background-image: url('https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=600&h=400&fit=crop&auto=format');
+            background-size: cover; background-position: center;
+        }
+        .menu-card:nth-child(3) .menu-card-img {
+            background: linear-gradient(135deg,#1a5a60,#3d8a91);
+            background-image: url('https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=600&h=400&fit=crop&auto=format');
+            background-size: cover; background-position: center;
+        }
+
+        .menu-badge {
+            position: absolute; top: 16px; left: 16px;
+            background: rgba(255,255,255,0.22); backdrop-filter: blur(8px);
+            color: #fff; font-size: 10px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 5px 12px; border-radius: 4px;
+        }
+        .menu-card-body { padding: 30px; }
+        .menu-method {
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            color: var(--teal); margin-bottom: 10px;
+        }
+        .menu-name {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 28px; font-weight: 400; color: var(--navy); margin-bottom: 10px;
+        }
+        .menu-desc { font-size: 14px; color: var(--text-60); line-height: 1.65; margin-bottom: 22px; }
+        .menu-price {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 24px; font-weight: 400; color: var(--navy);
+        }
+        .menu-price span { font-size: 14px; font-family: 'PT Sans',sans-serif; color: var(--text-60); }
+
+        /* ── PROCESS ── */
+        .process { background: var(--navy); padding: 100px 48px; color: #fff; }
+        .process .section-title { color: #fff; }
+        .process-steps {
+            display: grid; grid-template-columns: repeat(4,1fr);
+            gap: 40px; max-width: 1120px; margin: 64px auto 0;
+        }
+        .step { position: relative; }
+        .step-num {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 80px; font-weight: 300;
+            color: rgba(81,168,175,0.18); line-height: 1; margin-bottom: 16px;
+        }
+        .step-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 22px; font-weight: 400; margin-bottom: 10px;
+        }
+        .step-desc { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; }
+        .step-line {
+            position: absolute; top: 40px; right: -20px;
+            width: 40px; height: 1px; background: rgba(81,168,175,0.25);
+        }
+        .step:last-child .step-line { display: none; }
+
+        /* ── APP ── */
+        .app-section {
+            background: var(--teal); padding: 88px 48px; text-align: center; color: #fff;
+        }
+        .app-section .section-label { color: rgba(255,255,255,0.6); }
+        .app-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(30px, 4vw, 46px); font-weight: 300; margin-bottom: 12px;
+        }
+        .app-sub { font-size: 16px; color: rgba(255,255,255,0.72); margin-bottom: 40px; }
+        .app-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn-app {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.14); backdrop-filter: blur(8px);
+            color: #fff; border: 1px solid rgba(255,255,255,0.28);
+            padding: 15px 30px; border-radius: 10px;
+            text-decoration: none; font-size: 15px; font-weight: 700;
+            transition: background 0.2s;
+        }
+        .btn-app:hover { background: rgba(255,255,255,0.24); }
+
+        /* ── FOOTER ── */
+        footer { background: var(--navy); padding: 64px 48px 36px; }
+        .footer-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px; max-width: 1120px; margin: 0 auto 48px;
+        }
+        .footer-logo img { height: 48px; width: auto; filter: brightness(0) invert(1); margin-bottom: 16px; display: block; }
+        .footer-tagline {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-style: italic; font-size: 16px; color: rgba(255,255,255,0.38); margin-bottom: 22px;
+        }
+        .footer-phone {
+            font-size: 22px; font-weight: 700; color: #fff;
+            text-decoration: none; display: block; margin-bottom: 6px;
+        }
+        .footer-meta { font-size: 14px; color: rgba(255,255,255,0.4); }
+        .footer-col-title {
+            font-size: 10px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--teal); margin-bottom: 22px; display: block;
+        }
+        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .footer-links a {
+            color: rgba(255,255,255,0.5); text-decoration: none;
+            font-size: 15px; transition: color 0.2s;
+        }
+        .footer-links a:hover { color: #fff; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding-top: 24px; text-align: center;
+            font-size: 13px; color: rgba(255,255,255,0.3);
+            max-width: 1120px; margin: 0 auto;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── HAMBURGER ── */
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            background: none; border: none; cursor: pointer; padding: 4px;
+        }
+        .hamburger span {
+            display: block; width: 22px; height: 2px;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s ease; border-radius: 2px;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-menu {
+            display: none; position: fixed; inset: 72px 0 0;
+            background: rgba(11,50,55,0.98); backdrop-filter: blur(16px);
+            z-index: 99; flex-direction: column; align-items: center;
+            justify-content: center; gap: 36px;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            font-size: 13px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        .mobile-menu a:hover { color: #fff; }
+
+        /* ── MOBILE ── */
+        .nav-phone-mobile { display: none; }
+
+        @media (max-width: 768px) {
+            .header { padding: 0 20px; }
+            .nav-left { display: none; }
+            .nav-right .nav-link { display: none; }
+            .hamburger { display: flex; }
+            /* Показываем телефон как иконку на мобиле */
+            .nav-phone-mobile {
+                display: flex; align-items: center;
+                color: rgba(255,255,255,0.8); text-decoration: none; font-size: 18px;
+            }
+            .menu-grid { grid-template-columns: 1fr; }
+            .process-steps { grid-template-columns: 1fr; } /* 4 шага вертикально */
+            .step-line { display: none; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+            .trust-stats { gap: 48px; }
+            .trust, .menu-section, .process, .app-section, footer { padding: 64px 20px; }
+            .ornament { padding: 24px 20px; }
+            .hero { min-height: 100svh; }
+        }
+
+        /* ── PROTOTYPE NOTICE ── */
+        .prototype-bar {
+            background: var(--orange); color: #fff;
+            text-align: center; padding: 11px 20px;
+            font-size: 12px; font-weight: 700; letter-spacing: 1px;
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+        }
+        body { padding-bottom: 44px; }
+    </style>
+</head>
+<body>
+
+<div class="prototype-bar">
+    ПРОТОТИП · Фото-заглушки заменить на реальные · Цены уточнить у клиента
+</div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+    <nav class="nav-left" aria-label="Основная навигация">
+        <a href="#menu" class="nav-link">Меню</a>
+        <a href="#about" class="nav-link">О нас</a>
+        <a href="#delivery" class="nav-link">Доставка</a>
+    </nav>
+
+    <a href="#" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+        <img src="https://static.tildacdn.com/tild6166-6463-4438-a531-663435656263/logo.png" alt="The Raki">
+    </a>
+
+    <nav class="nav-right" aria-label="Контакты и заказ">
+        <a href="tel:+79808880588" class="nav-link">+7 (980) 888-05-88</a>
+        <a href="#order" class="btn-nav-order">Заказать</a>
+        <a href="tel:+79808880588" class="nav-phone-mobile" aria-label="Позвонить">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+    <a href="#about" onclick="closeMobileMenu()">О нас</a>
+    <a href="#menu" onclick="closeMobileMenu()">Меню</a>
+    <a href="#delivery" onclick="closeMobileMenu()">Доставка</a>
+    <a href="tel:+79808880588">+7 (980) 888-05-88</a>
+    <a href="#order" class="btn-nav-order" onclick="closeMobileMenu()">Заказать</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-gallery" id="gallery">
+        <div class="hero-slide active"></div>
+        <div class="hero-slide"></div>
+        <div class="hero-slide"></div>
+    </div>
+
+    <div class="hero-content">
+        <p class="hero-eyebrow">Раковарня · Москва · с 2017 года</p>
+        <h1 class="hero-title">The Raki.<br><em>Живые. Только так.</em></h1>
+        <p class="hero-sub">
+            Раки и морепродукты с доставкой по Москве.<br>
+            Никогда не замораживаем — варим живых прямо перед доставкой.
+        </p>
+        <div class="hero-cta">
+            <a href="#order" class="btn-hero">Заказать сейчас</a>
+        </div>
+    </div>
+
+    <div class="hero-scroll">
+        <div class="scroll-line"></div>
+        Листайте
+    </div>
+</section>
+
+<!-- ORNAMENT -->
+<div class="ornament" style="background:#fff;">
+    <div class="ornament-line"></div>
+    <div class="ornament-symbol">✦ ✦ ✦</div>
+    <div class="ornament-line"></div>
+</div>
+
+<!-- TRUST -->
+<section class="trust" id="about">
+    <span class="section-label">Наш принцип</span>
+    <h2 class="trust-headline">
+        Раки, которые не замораживают.<br><em>Никогда.</em>
+    </h2>
+    <p class="trust-desc">
+        Шеф с 15-летним опытом лично контролирует каждый заказ.
+        Раки поступают живыми — и уходят к вам горячими. В этом и только в этом наш секрет.
+    </p>
+    <div class="trust-stats">
+        <div>
+            <div class="stat-num">2017</div>
+            <div class="stat-label">год основания</div>
+        </div>
+        <div>
+            <div class="stat-num">15</div>
+            <div class="stat-label">лет опыта шефа</div>
+        </div>
+        <div>
+            <div class="stat-num">НТВ</div>
+            <div class="stat-label">федеральный канал</div>
+        </div>
+        <div>
+            <div class="stat-num">40</div>
+            <div class="stat-label">минут до вашей двери</div>
+        </div>
+    </div>
+</section>
+
+<!-- ORNAMENT -->
+<div class="ornament" style="background:var(--teal-light);">
+    <div class="ornament-line"></div>
+    <div class="ornament-symbol">✦ ✦ ✦</div>
+    <div class="ornament-line"></div>
+</div>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+    <div class="section-header">
+        <span class="section-label red">Меню</span>
+        <h2 class="section-title">Выберите способ приготовления</h2>
+    </div>
+
+    <div class="menu-grid">
+        <div class="menu-card">
+            <div class="menu-card-img">
+                <div class="menu-badge">Классика</div>
+            </div>
+            <div class="menu-card-body">
+                <div class="menu-method">Варёные</div>
+                <div class="menu-name">Раки классические</div>
+                <div class="menu-desc">Фирменный бульон с укропом, лавровым листом и специями по рецепту шефа. Варятся живыми — иначе не бывает.</div>
+                <div class="menu-price">от 1 200 ₽ <span>/ кг</span></div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <div class="menu-card-img">
+                <div class="menu-badge">Хит</div>
+            </div>
+            <div class="menu-card-body">
+                <div class="menu-method">Жареные</div>
+                <div class="menu-name">Раки в масле</div>
+                <div class="menu-desc">Золотистая корочка, хрустящий панцирь — особая техника, которую не повторить дома. Попробуйте один раз.</div>
+                <div class="menu-price">от 1 500 ₽ <span>/ кг</span></div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <div class="menu-card-img">
+                <div class="menu-badge">Сезон</div>
+            </div>
+            <div class="menu-card-body">
+                <div class="menu-method">Свежие</div>
+                <div class="menu-name">Краб и морепродукты</div>
+                <div class="menu-desc">Мидии, тигровые креветки, крабовые клешни — только свежее, только сегодня. Без заморозки.</div>
+                <div class="menu-price">от 800 ₽</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align:center; margin-top: 48px;">
+        <a href="tel:+79808880588" class="btn-hero" style="background:var(--navy); box-shadow: 0 8px 32px rgba(11,50,55,0.2);">
+            Заказать сейчас
+        </a>
+    </div>
+</section>
+
+<!-- ORNAMENT (on dark bg) -->
+<div class="ornament" style="background:var(--navy);">
+    <div class="ornament-line" style="background:rgba(81,168,175,0.3); opacity:1;"></div>
+    <div class="ornament-symbol" style="color:var(--teal); opacity:0.5;">✦ ✦ ✦</div>
+    <div class="ornament-line" style="background:rgba(81,168,175,0.3); opacity:1;"></div>
+</div>
+
+<!-- PROCESS -->
+<section class="process" id="delivery">
+    <div class="section-header">
+        <span class="section-label">Как это работает</span>
+        <h2 class="section-title">От живых — до горячих</h2>
+    </div>
+
+    <div class="process-steps">
+        <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-title">Вы заказываете</div>
+            <div class="step-desc">Звонок, приложение или сайт. Ответим мгновенно, уточним детали и пожелания.</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-title">Раки живые</div>
+            <div class="step-desc">Выбираем живых раков прямо перед приготовлением — никогда не из заморозки.</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-title">Шеф готовит</div>
+            <div class="step-desc">15 лет опыта, фирменный рецепт. Каждый заказ — под личным контролем.</div>
+            <div class="step-line"></div>
+        </div>
+        <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-title">Горячими к вам</div>
+            <div class="step-desc">Доставка по Москве и МО. Термоупаковка сохраняет тепло и аромат до вашей двери.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ORDER ANCHOR (target for CTA buttons) -->
+<div id="order"></div>
+
+<!-- APP -->
+<section class="app-section">
+    <span class="section-label">Приложение The Raki</span>
+    <h2 class="app-title">Заказывайте в один клик</h2>
+    <p class="app-sub">История заказов · кешбэк до 10% · эксклюзивные предложения</p>
+    <div class="app-buttons">
+        <a href="https://apps.apple.com/app/id1615829936" class="btn-app">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+            App Store
+        </a>
+        <a href="https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer" class="btn-app">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-7v4h4l-5 7z"/>
+            </svg>
+            RuStore
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-logo">
+            <img src="https://static.tildacdn.com/tild6166-6463-4438-a531-663435656263/logo.png" alt="The Raki">
+            <div class="footer-tagline">Живые. Только так.</div>
+            <a href="tel:+79808880588" class="footer-phone">+7 (980) 888-05-88</a>
+            <span class="footer-meta">Москва и МО · Доставка ежедневно</span>
+        </div>
+        <div>
+            <span class="footer-col-title">Меню</span>
+            <ul class="footer-links">
+                <li><a href="#">Варёные раки</a></li>
+                <li><a href="#">Жареные раки</a></li>
+                <li><a href="#">Краб и морепродукты</a></li>
+                <li><a href="#">Корпоративные заказы</a></li>
+            </ul>
+        </div>
+        <div>
+            <span class="footer-col-title">Компания</span>
+            <ul class="footer-links">
+                <li><a href="#">О нас</a></li>
+                <li><a href="#">Доставка и оплата</a></li>
+                <li><a href="#">Приложение</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2017–2026 The Raki &middot; theraki.ru &middot; Все права защищены
+    </div>
+</footer>
+
+<script>
+// Sticky header
+window.addEventListener('scroll', function() {
+    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// Hero gallery crossfade
+(function() {
+    var slides = document.querySelectorAll('.hero-slide');
+    if (!slides.length) return;
+    var i = 0;
+    function next() {
+        slides[i].classList.remove('active');
+        i = (i + 1) % slides.length;
+        slides[i].classList.add('active');
+    }
+    var timer = setInterval(next, 4500);
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) { clearInterval(timer); }
+        else { timer = setInterval(next, 4500); }
+    });
+})();
+
+// Hamburger menu
+var hamburger = document.getElementById('hamburger');
+var mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+});
+function closeMobileMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+}
+</script>
+
+</body>
+</html>

@@ -8,17 +8,36 @@ QR-code system for The Raki restaurant (Moscow crawfish delivery).
 
 ## Brand Guide
 - **Name**: The Raki (Раковарня)
-- **Colors**:
+- **Tagline**: "Вкусности для гурманов..."
+- **Website**: https://theraki.ru/ (built on Tilda)
+- **Font**: FuturaPT (fallback: system sans-serif)
+
+### Digital Colors (website, landing page)
   - Deep blue-green (bg): `#0b3237`
   - Teal (accent): `#51a8af`
   - Dark teal: `#2e9099`
   - Gold: `#be9667`
   - Yellow highlight: `#fff705`
   - White: `#ffffff`
-- **Font**: FuturaPT (fallback: system sans-serif)
-- **Style**: Premium, dark, minimalist, seafood
-- **Logo URL**: `https://static.tildacdn.com/tild6166-6463-4438-a531-663435656263/logo.png`
-- **Website**: https://theraki.ru/
+  - Style: Premium, dark, minimalist
+
+### Car Wrap Colors (stickers, QR surround)
+  - Light blue: PANTONE 14-4130 TCX "Blue Fros"
+  - Red: PMS 2347 C / `#e10600`
+  - White: Pantone white
+  - Style: Russian folk / Gzhel-inspired pattern
+
+### Design Decisions (FINAL)
+- **QR code**: black modules, white bg, BLUE surround (PANTONE 14-4130)
+- **QR logo center**: black The Raki logo (the_raki_R.png)
+- **Landing page**: dark style (#0b3237, #51a8af) like website
+- **Car wrap**: owner's wife handles, folk/Gzhel pattern
+
+### Assets (in project root)
+- `the_raki_R.png` — black logo on transparent bg (for QR center)
+- `photo_2026-02-23_10-51-15.jpg` — mascot (blue+red+white folk crab)
+- `photo_2026-02-23_18-32-32.jpg` — wrap pattern (Illustrator)
+- Logo (site): `https://static.tildacdn.com/tild6166-6463-4438-a531-663435656263/logo.png`
 
 ## App Links (VERIFIED 2025-02-24)
 - **Package name**: `com.yumasoft.ypos.theraki.customer`
@@ -32,7 +51,8 @@ QR-code system for The Raki restaurant (Moscow crawfish delivery).
 - **Car**: Kia Morning (Picanto) JA 2021, 5-door hatchback
 - **Body dimensions**: 3595 x 1595 x 1495 mm
 - **Sticker locations**: rear door windows + lower half of rear window
-- **Awaiting**: photos of car + wrap design from owners
+- **Wrap design**: received (folk/Gzhel pattern, blue+red+white)
+- **Awaiting**: photos of actual car for precise measurements
 
 ## Quality Rules (CRITICAL)
 1. **Self-check after every code block**: ask yourself — is this optimal? Am I cutting corners?

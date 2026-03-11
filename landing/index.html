@@ -2,50 +2,45 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Raki — Скачай приложение</title>
     <meta name="description" content="Скачай приложение The Raki — заказывай премиум раков и морепродукты с кешбэком до 10%">
-    <meta name="theme-color" content="#0b3237">
+    <meta name="theme-color" content="#51A8AF">
     <meta property="og:title" content="The Raki — Скачай приложение">
     <meta property="og:description" content="Премиум раки и морепродукты с доставкой по Москве. Кешбэк до 10%.">
     <meta property="og:type" content="website">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦐</text></svg>">
+    <meta property="og:url" content="https://convyrtech.github.io/theRaki.qrlend">
+    <meta property="og:image" content="https://convyrtech.github.io/theRaki.qrlend/og-image.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <!-- INSTANT REDIRECTS — user never sees the page -->
     <script>
     (function() {
+        if (location.search.indexOf('noredirect') !== -1) return;
         var ua = navigator.userAgent || '';
-        // iOS → App Store immediately
         if (/iPhone|iPad|iPod/i.test(ua)) {
             window.location.replace('https://apps.apple.com/app/id1615829936');
             return;
         }
-        // Android → RuStore immediately
         if (/Android/i.test(ua)) {
-            // Huawei with HMS → AppGallery
-            if (/Huawei|HMSCore/i.test(ua) && !/GMS/i.test(ua)) {
-                window.location.replace('https://appgallery.huawei.com/app/C105908103');
-            } else {
-                window.location.replace('https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer');
-            }
+            window.location.replace('https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer');
         }
     })();
     </script>
 
     <style>
         :root {
-            --bg: #0b3237;
-            --bg-light: #0e3d43;
-            --bg-card: rgba(255,255,255,0.06);
-            --teal: #51a8af;
-            --teal-glow: rgba(81,168,175,0.3);
-            --gold: #be9667;
-            --gold-glow: rgba(190,150,103,0.2);
-            --white: #ffffff;
-            --white-70: rgba(255,255,255,0.7);
-            --white-40: rgba(255,255,255,0.4);
-            --white-15: rgba(255,255,255,0.15);
-            --white-08: rgba(255,255,255,0.08);
+            --bg: #51A8AF;
+            --bg-deep: #47949A;
+            --bg-card: rgba(255,255,255,0.18);
+            --text: #1a2e3b;
+            --text-70: rgba(26,46,59,0.7);
+            --text-40: rgba(26,46,59,0.45);
+            --text-15: rgba(26,46,59,0.15);
+            --text-08: rgba(26,46,59,0.08);
+            --orange: #E07830;
+            --orange-deep: #c86520;
+            --orange-glow: rgba(224,120,48,0.35);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -53,7 +48,7 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
-            color: var(--white);
+            color: var(--text);
             min-height: 100vh;
             min-height: 100dvh;
             display: flex;
@@ -62,7 +57,7 @@
             justify-content: center;
             padding: 32px 20px;
             -webkit-font-smoothing: antialiased;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -74,8 +69,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(ellipse at 30% 20%, rgba(81,168,175,0.08) 0%, transparent 50%),
-                        radial-gradient(ellipse at 70% 80%, rgba(190,150,103,0.06) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(224,120,48,0.06) 0%, transparent 50%);
             animation: bgShift 20s ease-in-out infinite alternate;
             pointer-events: none;
             z-index: 0;
@@ -93,19 +88,17 @@
             z-index: 1;
         }
 
-        /* Logo */
         .logo {
             width: 180px;
             height: auto;
             margin-bottom: 6px;
-            filter: brightness(0) invert(1);
             opacity: 0;
             animation: fadeScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
         }
 
         .tagline {
             font-size: 13px;
-            color: var(--white-40);
+            color: var(--text-40);
             margin-bottom: 36px;
             font-style: italic;
             letter-spacing: 1px;
@@ -126,46 +119,42 @@
 
         .subheading {
             font-size: 15px;
-            color: var(--white-70);
+            color: var(--text-70);
             margin-bottom: 24px;
             line-height: 1.5;
             opacity: 0;
             animation: fadeUp 0.6s ease-out 0.5s forwards;
         }
 
-        /* Cashback badge */
         .cashback {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            background: linear-gradient(135deg, var(--gold), #d4a96a);
-            color: var(--bg);
+            background: linear-gradient(135deg, var(--orange), #e89050);
+            color: #ffffff;
             font-weight: 700;
             font-size: 13px;
             padding: 6px 16px;
             border-radius: 24px;
             margin-bottom: 32px;
-            box-shadow: 0 4px 20px var(--gold-glow);
+            box-shadow: 0 4px 20px var(--orange-glow);
             opacity: 0;
             animation: fadeUp 0.6s ease-out 0.6s forwards;
         }
 
-        /* Buttons container — hidden initially on mobile, shown as fallback */
         .buttons {
             opacity: 0;
             animation: fadeUp 0.6s ease-out 0.7s forwards;
         }
 
-        /* Primary button */
         .btn-primary {
-            display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             width: 100%;
             padding: 16px 24px;
-            background: linear-gradient(135deg, var(--teal), #3d949b);
-            color: var(--white);
+            background: linear-gradient(135deg, var(--orange), var(--orange-deep));
+            color: #ffffff;
             text-decoration: none;
             border-radius: 16px;
             font-size: 17px;
@@ -173,7 +162,7 @@
             letter-spacing: -0.2px;
             transition: all 0.2s ease;
             margin-bottom: 12px;
-            box-shadow: 0 4px 24px var(--teal-glow);
+            box-shadow: 0 4px 28px var(--orange-glow);
             position: relative;
             overflow: hidden;
         }
@@ -181,54 +170,20 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
             pointer-events: none;
         }
         .btn-primary:active {
             transform: scale(0.97);
-            box-shadow: 0 2px 12px var(--teal-glow);
+            box-shadow: 0 2px 14px var(--orange-glow);
         }
 
-        /* Secondary buttons */
-        .btn-secondary {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 14px 20px;
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: 500;
-            border: 1px solid var(--white-08);
-            transition: all 0.2s ease;
-            margin-bottom: 10px;
-        }
-        .btn-secondary:active {
-            transform: scale(0.97);
-            background: var(--white-08);
-        }
-
-        .btn-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .btn-row .btn-secondary { margin-bottom: 0; }
-
-        /* Icons */
         .icon { width: 20px; height: 20px; flex-shrink: 0; }
 
-        /* Divider */
         .divider {
             width: 32px;
             height: 1px;
-            background: var(--white-15);
+            background: var(--text-15);
             margin: 24px auto;
             opacity: 0;
             animation: fadeUp 0.6s ease-out 0.8s forwards;
@@ -244,33 +199,32 @@
         }
         .redirect-notice p {
             font-size: 15px;
-            color: var(--white-70);
+            color: var(--text-70);
             margin-bottom: 16px;
         }
         .spinner {
             width: 32px;
             height: 32px;
-            border: 2px solid var(--white-15);
-            border-top-color: var(--teal);
+            border: 2px solid var(--text-15);
+            border-top-color: var(--orange);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin: 0 auto 16px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         .redirect-notice .fallback-link {
-            color: var(--white-40);
+            color: var(--text-40);
             font-size: 13px;
             text-decoration: underline;
-            text-decoration-color: var(--white-15);
+            text-decoration-color: var(--text-15);
         }
 
-        /* Desktop hint */
         .desktop-hint {
             display: none;
             font-size: 14px;
-            color: var(--white-70);
-            padding: 20px;
-            border: 1px solid var(--white-08);
+            color: var(--text-70);
+            padding: 28px 20px;
+            border: 1px solid var(--text-08);
             border-radius: 16px;
             background: var(--bg-card);
             backdrop-filter: blur(10px);
@@ -279,24 +233,49 @@
             opacity: 0;
             animation: fadeUp 0.6s ease-out 0.9s forwards;
         }
+        .desktop-hint .qr-inline {
+            width: 160px;
+            height: 160px;
+            margin: 16px auto 12px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px;
+        }
+        .desktop-hint .qr-inline img {
+            width: 100%;
+            height: 100%;
+        }
+        .desktop-hint .qr-caption {
+            font-size: 12px;
+            color: var(--text-40);
+            margin-top: 4px;
+        }
 
-        /* Footer */
+        .apk-link {
+            font-size: 13px;
+            color: var(--text-40);
+            text-decoration: underline;
+            text-decoration-color: var(--text-15);
+            margin-top: 14px;
+            transition: color 0.2s;
+        }
+        .apk-link:hover { color: var(--text-70); }
+
         .footer {
             font-size: 12px;
-            color: var(--white-40);
+            color: var(--text-40);
             margin-top: 28px;
             line-height: 1.6;
             opacity: 0;
             animation: fadeUp 0.6s ease-out 1s forwards;
         }
         .footer a {
-            color: var(--teal);
+            color: var(--orange);
             text-decoration: none;
             transition: opacity 0.2s;
         }
         .footer a:hover { opacity: 0.8; }
 
-        /* Animations */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -306,7 +285,6 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Reduce motion */
         @media (prefers-reduced-motion: reduce) {
             *, *::before { animation-duration: 0.01ms !important; }
         }
@@ -315,7 +293,7 @@
 <body>
 
 <div class="container">
-    <img class="logo" src="https://static.tildacdn.com/tild6166-6463-4438-a531-663435656263/logo.png" alt="The Raki" onerror="this.style.display='none'">
+    <img class="logo" src="logo.png" alt="The Raki" onerror="this.style.display='none'">
     <p class="tagline">вкусности для гурманов</p>
 
     <h1 class="heading">Скачай приложение</h1>
@@ -330,34 +308,29 @@
         <a class="fallback-link" id="fallback-link" href="#">Открыть вручную</a>
     </div>
 
-    <!-- Buttons — shown as fallback or on desktop -->
+    <!-- Buttons — platform-specific -->
     <div class="buttons" id="buttons" style="display:none;">
-        <a class="btn-primary" href="https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer">
+        <a class="btn-primary" id="btn-appstore" href="https://apps.apple.com/app/id1615829936" style="display:none;">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Открыть в App Store
+        </a>
+
+        <a class="btn-primary" id="btn-rustore" href="https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer" style="display:none;">
             <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-7v4h4l-5 7z"/></svg>
             Открыть в RuStore
         </a>
 
-        <div class="btn-row">
-            <a class="btn-secondary" href="https://apps.apple.com/app/id1615829936">
-                <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                App Store
-            </a>
-            <a class="btn-secondary" href="https://play.google.com/store/apps/details?id=com.yumasoft.ypos.theraki.customer">
-                <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 3.52a1.66 1.66 0 0 0-.18.76v15.44c0 .28.06.54.18.76L12 12 3.18 3.52zM13.41 12l3.76-3.76 1.65.95c1.36.79 1.36 2.08 0 2.86l-1.65.95L13.41 12zm-1.41 1.41L3.58 21.83l8.42-4.87L12 13.41zM12 10.59l.42-3.55L3.58 2.17 12 10.59z"/></svg>
-                Google Play
-            </a>
-        </div>
-
-        <a class="btn-secondary" href="https://appgallery.huawei.com/app/C105908103">
-            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
-            Huawei AppGallery
+        <a class="apk-link" id="apk-link" href="https://github.com/convyrtech/theRaki.qrlend/releases/download/v1.0/theraki.apk" download style="display:none;">
+            Скачать APK
         </a>
     </div>
 
     <div class="divider"></div>
 
     <div class="desktop-hint" id="desktop-hint">
-        Откройте эту страницу с телефона<br>или отсканируйте QR-код на нашей машине доставки
+        Отсканируйте QR-код телефоном
+        <div class="qr-inline"><img src="qr-web.svg" alt="QR-код для скачивания приложения"></div>
+        <div class="qr-caption">convyrtech.github.io/theRaki.qrlend</div>
     </div>
 
     <div class="footer">
@@ -377,26 +350,46 @@
     var buttons = document.getElementById('buttons');
     var fallback = document.getElementById('fallback-link');
     var hint = document.getElementById('desktop-hint');
+    var apkLink = document.getElementById('apk-link');
+    var btnAppstore = document.getElementById('btn-appstore');
+    var btnRustore = document.getElementById('btn-rustore');
 
-    if (isMobile) {
-        // Show redirect spinner
+    var noRedirect = location.search.indexOf('noredirect') !== -1;
+
+    if (isMobile && !noRedirect) {
         notice.style.display = 'block';
 
-        // Set fallback link
         if (isIOS) {
             fallback.href = 'https://apps.apple.com/app/id1615829936';
         } else {
             fallback.href = 'https://www.rustore.ru/catalog/app/com.yumasoft.ypos.theraki.customer';
         }
 
-        // If redirect didn't work after 2.5s, show buttons
+        // If redirect didn't work after 2.5s, show platform-specific buttons
         setTimeout(function() {
             notice.style.display = 'none';
             buttons.style.display = 'block';
+            if (isIOS) {
+                btnAppstore.style.display = 'flex';
+            } else {
+                btnRustore.style.display = 'flex';
+                apkLink.style.display = 'block';
+            }
         }, 2500);
+    } else if (isMobile && noRedirect) {
+        // Mobile with ?noredirect — show buttons immediately
+        buttons.style.display = 'block';
+        if (isIOS) {
+            btnAppstore.style.display = 'flex';
+        } else {
+            btnRustore.style.display = 'flex';
+            apkLink.style.display = 'block';
+        }
     } else {
         // Desktop: show all buttons + hint
         buttons.style.display = 'block';
+        btnAppstore.style.display = 'flex';
+        btnRustore.style.display = 'flex';
         hint.style.display = 'block';
     }
 })();
